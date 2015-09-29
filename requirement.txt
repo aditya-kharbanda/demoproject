@@ -1,0 +1,6 @@
+#Install with: `pip3 install -r requirements.txt`
+
+# Infrastructure
+Django >= 1.8.3, < 1.9
+Pillow == 2.9.0
+pymssql
