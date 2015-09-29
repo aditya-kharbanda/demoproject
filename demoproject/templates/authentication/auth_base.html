@@ -1,11 +1,19 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
 {% block title %} CB | Authentication {% endblock %}
+
+{% block extrahead %} 
+<link rel="stylesheet" href="{% static 'authentication/css/auth.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="row cb-auth-container">
     <div class="col s12 m8 l6 offset-m2 offset-l3">
-        {% block auth_content %}
-        {% endblock %}
+        <div class="card-panel">
+            {% block auth_content %}
+            {% endblock %}
+        </div>
     </div>
 </div>
 {% endblock %}
