@@ -7,6 +7,12 @@ main {
     flex: 1 0 auto;
 }
 
+.brand-logo img {
+    height: 54px;
+    width: auto;
+    margin-top: 5px;
+}
+
 footer.page-footer .container {
     display: flex;
     align-items: center;
