@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
 from .models import DemoUser
 
 class LoginForm(AuthenticationForm):
@@ -32,3 +32,16 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = DemoUser
         fields = ['username', 'email', 'first_name', 'last_name', 'gender', 'dob', 'phone_number']
+
+class ForgotPasswordForm(PasswordResetForm):
+    def clean_email(self):
+       email = self.cleaned_data.get('email')
+       if email and DemoUser.objects.filter(email = email).count() == 0:
+           raise forms.ValidationError("We cannot find account with this email. Please verify your email address and try again.")
+       return email
+
+class ResetPasswordForm(SetPasswordForm):
+    def __init__(self, user, *args, **kwargs):
+        super(ResetPasswordForm, self).__init__(user, *args, **kwargs)
+        self.fields['new_password2'].label = 'Confirm Password'
+

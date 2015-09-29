@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import (login as auth_login, logout as auth_logout)
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
-from django.utils.http import is_safe_url
 from django.conf import settings
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_text
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.cache import never_cache
 
 from .models import DemoUser
-from .forms import LoginForm
+from .forms import LoginForm, ForgotPasswordForm, ResetPasswordForm
 
 # Create your views here.
 
@@ -48,4 +52,58 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect(settings.LOGIN_URL)
+
+
+@require_http_methods(['GET', 'POST'])
+def forgot_password(request):
+    if request.user.is_authenticated():
+        return redirect(settings.LOGIN_REDIRECT_URL)
+    if request.method == 'POST':
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            opts = {
+                    'token_generator' : default_token_generator,
+                    'from_email' : settings.DEFAULT_FROM_EMAIL,
+                    'email_template_name' : 'email/password_reset/password_reset_email_text.txt',
+                    'subject_template_name' : 'email/password_reset/password_reset_subject.txt',
+                    'request' : request,
+                    'html_email_template_name' : None
+            }
+            form.save(**opts)
+            return render(request, 'authentication/password_reset_email_sent.html')
+    else:
+        form = ForgotPasswordForm()
+    context = {'form' : form}
+    return render(request, 'authentication/password_reset_form.html', context)
+
+
+@require_http_methods(['GET', 'POST'])
+@sensitive_post_parameters()
+@never_cache
+def reset_password(request, uidb64=None, token=None):
+    if request.user.is_authenticated():
+        return redirect(settings.LOGIN_REDIRECT_URL)
+
+    assert uidb64 is not None and token is not None
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = DemoUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        validlink = True
+        if request.method == 'POST':
+            form = ResetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                return render(request, 'authentication/password_reset_complete.html')
+        else:
+            form = ResetPasswordForm(user)
+    else:
+        validlink = False
+        form = None
+    context = { 'validlink' : validlink, 'form' : form }
+    return render(request, 'authentication/password_reset_confirm_form.html', context)
 

@@ -35,3 +35,15 @@ form .errors small.error {
 form a.cb-form.right {
     line-height: 36px;
 }
+
+.cb-error {
+    color: #f44336; 
+}
+
+.cb-notice {
+    color: #ff6d00;
+}
+
+.cb-auth-container {
+    margin-top: 60px;
+}
