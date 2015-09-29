@@ -18,3 +18,5 @@ Sample project using Django
     ```create database demoproject;```
 5. Exit your mysql console 
     ```exit```
+6. Change settings.py to update your database and email settings
+
