@@ -1,5 +1,9 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from .models import DemoUser
+
+class LoginForm(AuthenticationForm):
+    pass
 
 class UserCreationForm(forms.ModelForm):
     passwd1 = forms.CharField(label='Password', widget=forms.PasswordInput)

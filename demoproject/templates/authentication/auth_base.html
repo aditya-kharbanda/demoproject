@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} CB | Authentication {% endblock %}
+
+{% block content %}
+<div class="row cb-auth-container">
+    <div class="col s12 m8 l6 offset-m2 offset-l3">
+        {% block auth_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

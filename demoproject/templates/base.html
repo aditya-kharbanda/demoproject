@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+    {% load staticfiles %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name = "viewport" content = "width=device-width, initial-scale = 1">
+        <title> {% block title %} Coding Blocks {% endblock %} </title>
+        {% include 'material/includes/material_css.html' %}
+        <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'base/css/base.css' %}">
+        {% block extrahead %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            {% block navbar %}
+            <div class="navbar-fixed">
+                <nav>
+                    <div class="container nav-wrapper">
+                        <a href="http://www.codingblocks.com" class="brand-logo">
+                            <img src="{% static 'base/images/logo.png' %}">
+                        </a>
+                        {% if user.is_authenticated %}
+                        {% include "nav/nav.html" %}
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+            {% endblock %}
+        </header>
+        <main>
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+        <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                    <span>
+                        &copy; {% now 'Y' %} Coding Blocks Pvt. Ltd
+                    </span>
+                    <span class="cb-footer-icons"> 
+                        <a class="grey-text text-lighten-4" href="mailto:info@codingblocks.com"><i class="fa fa-envelope-square"></i></a>
+                        <a class="grey-text text-lighten-4" href="https://plus.google.com/+Codingblocks"><i class="fa fa-google-plus-square"></i></a>
+                        <a class="grey-text text-lighten-4" href="http://www.facebook.com/codingblocksindia"><i class="fa fa-facebook-square"></i></a>
+                    </span>
+                </div>
+            </div>
+        </footer>
+        {% include 'material/includes/material_js.html' %}
+        {% block scripts %} 
+        {% endblock %}
+    </body>
+</html>

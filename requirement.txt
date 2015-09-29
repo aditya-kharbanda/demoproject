@@ -5,3 +5,4 @@ Django >= 1.8.3, < 1.9
 Pillow == 2.9.0
 pymssql
 django-phonenumber-field
+django-material

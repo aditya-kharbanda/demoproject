@@ -1,0 +1,16 @@
+{% extends "authentication/auth_base.html" %}
+{% load material_form %}
+{% block title %} CB | Login {% endblock %}
+
+{% block auth_content %}
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    {% form form=form %}{% endform %}
+    <div class="row">
+        <div class="col s12"> 
+            <button type="submit" name="login" class="btn waves-effect waves-light left">Log In</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

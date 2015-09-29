@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account'
+    'account',
+    'material',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,3 +122,7 @@ EMAIL_USE_TLS = True
 
 # Changing default Auth User Model
 AUTH_USER_MODEL = 'account.DemoUser'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'

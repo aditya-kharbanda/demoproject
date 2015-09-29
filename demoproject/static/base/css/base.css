@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
+
+footer.page-footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer.page-footer .footer-copyright .cb-footer-icons {
+    font-size: 28px;
+}
+
+
+form small.error {
+    font-size: 100%;
+}
+
+form .errors small.error {
+    font-size: 75%;
+}
+
+form a.cb-form.right {
+    line-height: 36px;
+}
