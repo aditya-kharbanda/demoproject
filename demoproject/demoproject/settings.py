@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'account'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,3 +119,5 @@ EMAIL_HOST_USER = 'youraccount@youremail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+# Changing default Auth User Model
+AUTH_USER_MODEL = 'account.DemoUser'
