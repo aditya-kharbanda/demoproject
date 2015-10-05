@@ -8,9 +8,10 @@ from django.utils.encoding import force_text
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
+from django.http import JsonResponse
 
 from .models import DemoUser
-from .forms import LoginForm, ForgotPasswordForm, ResetPasswordForm
+from .forms import LoginForm, ForgotPasswordForm, ResetPasswordForm, UserCreationForm, SearchUserForm
 
 # Create your views here.
 
@@ -106,4 +107,29 @@ def reset_password(request, uidb64=None, token=None):
         form = None
     context = { 'validlink' : validlink, 'form' : form }
     return render(request, 'authentication/password_reset_confirm_form.html', context)
+
+@require_GET
+@login_required
+def search(request):
+    context = { 'form' : SearchUserForm }
+    return render(request, 'search/search_base.html', context);
+
+@require_GET
+@login_required
+def search_users(request):
+    name = request.GET.get('name')
+    data = []
+    if name:
+        users = DemoUser.objects.filter(first_name__icontains = name)
+        print(users)
+        data = [ { 'id' : user.id , 'name' : user.get_full_name()} for user in users ]
+    print(data);
+    return JsonResponse(data = {'users': data});
+
+
+
+
+    
+
+
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load material_form %}
+
+{% block title %} CB | Search User {% endblock %}
+{% block content %}
+<form method="GET" action="{% url 'search_users' %}">
+    {% form form=form %}{% endform %}
+</form>
+<ul class="collection with-header">
+    <li class="collection-header">Type something on the top!!!</li>
+</ul>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'search/search.js' %}"></script>
+{% endblock %}
+

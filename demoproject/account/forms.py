@@ -45,3 +45,6 @@ class ResetPasswordForm(SetPasswordForm):
         super(ResetPasswordForm, self).__init__(user, *args, **kwargs)
         self.fields['new_password2'].label = 'Confirm Password'
 
+class SearchUserForm(forms.Form):
+    name = forms.CharField()
+
